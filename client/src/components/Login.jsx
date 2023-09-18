@@ -15,7 +15,7 @@ const Login = () => {
         setUsername('');
 
         try {
-            const response = await axios.post('http://localhost:5000/login', {username, password});
+            const response = await axios.post('http://localhost:5000/auth/login', {username, password});
             if (response.status === 200){
                 navigate('/hero');
             }

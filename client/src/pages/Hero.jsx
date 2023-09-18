@@ -14,7 +14,7 @@ useEffect(()=>{
   
   const fetchData = async()=>{
     try {
-      const response = await axios.get('http://localhost:5000/userinfo', { withCredentials: true });
+      const response = await axios.get('http://localhost:5000/auth/userinfo', { withCredentials: true });
       console.log(response.data)
 
     } catch (error) {

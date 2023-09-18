@@ -13,7 +13,7 @@ const Register = () => {
     setUsername("");
 
     try {
-      await axios.post("http://localhost:5000/register", {
+      await axios.post("http://localhost:5000/auth/register", {
         username,
         password,
       });
