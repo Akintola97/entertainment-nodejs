@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 
-exports.register = async (req, res, next) => {
+exports.register = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -33,7 +33,7 @@ exports.register = async (req, res, next) => {
   }
 };
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -52,8 +52,8 @@ exports.login = async (req, res, next) => {
     const token = jwt.sign({ userId: user._id }, secret, { expiresIn: "1hr" });
 
     res.cookie('authToken', token, {
+      path: '/',
       httpOnly: true,
-      sameSite: "Strict",
       maxAge: 3600000, // 1hr in milliseconds
     });
 
@@ -64,9 +64,9 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.authenticate = async (req, res, next) => {
+exports.authenticate = async (req, res) => {
   const authToken = req.cookies.authToken;
-  console.log(authToken)
+  // console.log(authToken)
 
   if (!authToken) {
     return res.status(401).json({ message: "Authentication failed - Token missing" });
@@ -89,7 +89,7 @@ exports.authenticate = async (req, res, next) => {
 };
 
 exports.userInfo = async (req, res) => {
-  const userId = req.id; // Ensure you have a way to get the user's ID
+  const userId = req.id;
   try {
     const user = await User.findById(userId);
 

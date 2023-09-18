@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import axios from 'axios';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
@@ -17,7 +17,7 @@ const Login = () => {
         try {
             const response = await axios.post('http://localhost:5000/auth/login', {username, password});
             if (response.status === 200){
-                navigate('/hero');
+                navigate('/heropage');
             }
             else{
                 console.log('Login failed');
