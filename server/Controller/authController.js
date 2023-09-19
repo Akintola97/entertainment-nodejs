@@ -103,3 +103,15 @@ exports.userInfo = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
+
+
+exports.logout = async(req, res) =>{
+  try{
+    res.clearCookie('authToken', {path: '/'});
+    res.status(200).json({message: "Logout Successful"});
+  }
+  catch(error){
+    console.log(error);
+    res.status(500).json({message: "Server Error"});
+  }
+}
