@@ -2,31 +2,33 @@ import React from 'react'
 import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
 const Login = () => {
 
+    const {setUser } = useAuth();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = async(e)=>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setPassword('');
-        setUsername('');
-
+    
         try {
-            const response = await axios.post('http://localhost:5000/auth/login', {username, password});
-            if (response.status === 200){
-                navigate('/heropage');
-            }
-            else{
-                console.log('Login failed');
-            }
+          const response = await axios.post('http://localhost:5000/auth/login', {
+            username,
+            password,
+          });
+          if (response.status === 200) {
+            setUser(username); // Update the user state
+            navigate('/heropage');
+          } else {
+            console.log('Login failed');
+          }
         } catch (error) {
-            console.log(error);
+          console.log(error);
         }
-       
-    }
+      };
 
 
   return (
