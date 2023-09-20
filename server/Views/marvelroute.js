@@ -4,6 +4,8 @@ const marvel_route = express.Router();
 
 
 marvel_route.get('/characters', marvelhero )
+marvel_route.get('/db', db)
+
 
 
 
