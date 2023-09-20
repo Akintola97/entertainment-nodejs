@@ -1,5 +1,5 @@
 const express = require('express');
-const { marvelhero } = require('../Controller/marvelController');
+const { marvelhero, db } = require('../Controller/marvelController');
 const marvel_route = express.Router();
 
 
