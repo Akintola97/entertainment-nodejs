@@ -7,9 +7,8 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
-import Business from './Business';
-import Sports from './Sports';
-import Science from './Science'
+import Comics from './Comics';
+
 
 
 function TabPanel(props) {
@@ -40,13 +39,13 @@ TabPanel.propTypes = {
 
 const HeadlineNav = () => {
   const [value, setValue] = React.useState(0);
-  const [businessInfo, setBusinessInfo] = useState([{}]);
+  const [comicData, setComicData] = useState([{}]);
 
 
   useEffect(()=>{
     const fetchData = async() =>{
-      const businessData = await axios.get('https://news-api-t51q.onrender.com/business');
-      setBusinessInfo(businessData.data.articles)
+      const data = await axios.get('http://localhost:5000/marvel/comic/db');
+      setComicData(data.data)
     }
 
     fetchData();
@@ -55,28 +54,28 @@ const HeadlineNav = () => {
 
   }, [])
 
-  const [sportsInfo, setSportsInfo] = useState([{}]);
+  // const [sportsInfo, setSportsInfo] = useState([{}]);
 
-  useEffect(()=>{
-    const fetchData = async() =>{
-      const sportsData = await axios.get('https://news-api-t51q.onrender.com/sports')
-      setSportsInfo(sportsData.data.articles)
-    }
-    fetchData();
-  }, [])
+  // useEffect(()=>{
+  //   const fetchData = async() =>{
+  //     const sportsData = await axios.get('https://news-api-t51q.onrender.com/sports')
+  //     setSportsInfo(sportsData.data.articles)
+  //   }
+  //   fetchData();
+  // }, [])
 
-  const [scienceInfo, setScienceInfo] = useState([{}]);
+  // const [scienceInfo, setScienceInfo] = useState([{}]);
 
-  useEffect(()=>{
-    const fetchData = async() =>{
-      const scienceData = await axios.get('https://news-api-t51q.onrender.com/science')
-      setScienceInfo(scienceData.data.articles)
-    }
+  // useEffect(()=>{
+  //   const fetchData = async() =>{
+  //     const scienceData = await axios.get('https://news-api-t51q.onrender.com/science')
+  //     setScienceInfo(scienceData.data.articles)
+  //   }
 
-    fetchData();
+  //   fetchData();
 
 
-  }, [])
+  // }, [])
 
 
 
@@ -90,18 +89,19 @@ const HeadlineNav = () => {
   return (
     <Box sx={{ width: '100%', bgcolor: 'background.paper', p:5 }}>
       <Tabs value={value} onChange={handleChange} centered>
-        <Tab label="BUSINESS" />
+        <Tab label="COMICS" />
         <Tab label="SPORTS" />
         <Tab label="SCIENCE" />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <Business businessInfo = {businessInfo} />
+        {/* <Business businessInfo = {businessInfo} /> */}
+        <Comics comicData = {comicData} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Sports sportsInfo = {sportsInfo} />
+          {/* <Sports sportsInfo = {sportsInfo} /> */}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Science scienceInfo = {scienceInfo} />
+          {/* <Science scienceInfo = {scienceInfo} /> */}
         </TabPanel>
       
     </Box>

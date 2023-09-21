@@ -2,6 +2,8 @@ const crypto = require("crypto");
 const axios = require("axios");
 
 const Characters = require("../Model/marvelCharacters");
+const Comic = require('../Model/marvelComics'); // Import the comic schema model
+
 
 const ts = new Date().getTime();
 const privateKey = process.env.PRIVATE_KEY;
@@ -69,3 +71,65 @@ exports.db = async(req, res)=>{
     console.log(error)
   }
 }
+
+const comicNames = ['wolverine', 'hulk', 'thor'];
+
+exports.marvelcomics = async (req, res) => {
+  try {
+    const allComicsData = [];
+
+    for (const name of comicNames) {
+      const marvelComicResponse = await axios.get(
+        `https://gateway.marvel.com:443/v1/public/comics?title=${name}&ts=${ts}&apikey=${publicKey}&hash=${hash}`
+      );
+
+      const comicData = marvelComicResponse.data;
+      if (comicData.data.total !== 0) {
+        allComicsData.push(comicData);
+      }
+    }
+
+    // Save the collected comic data to MongoDB
+    for (const data of allComicsData) {
+      const results = data.data.results;
+      const comicData = new Comic({
+        code: data.code,
+        status: data.status,
+        copyright: data.copyright,
+        attributionText: data.attributionText,
+        attributionHTML: data.attributionHTML,
+        etag: data.etag,
+        data: {
+          offset: data.data.offset,
+          limit: data.data.limit,
+          total: data.data.total,
+          count: data.data.count,
+          results: results,
+        },
+      });
+
+      // Save the document to MongoDB
+      await comicData.save();
+      console.log(comicData);
+    }
+
+    res.send(allComicsData);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+
+exports.comic_db = async(req, res)=>{
+    try{
+      const db = await Comic.find();
+      res.send(db);
+      console.log(db)
+      return res.status(200);
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+  
