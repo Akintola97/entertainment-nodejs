@@ -20,7 +20,7 @@ const Login = () => {
             password,
           });
           if (response.status === 200) {
-            setUser(username); // Update the user state
+            setUser(username);
             navigate('/heropage');
           } else {
             console.log('Login failed');

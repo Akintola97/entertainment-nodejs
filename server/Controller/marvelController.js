@@ -3,6 +3,7 @@ const axios = require("axios");
 
 const Characters = require("../Model/marvelCharacters");
 const Comic = require('../Model/marvelComics'); // Import the comic schema model
+const Character = require("../Model/marvelCharacter");
 
 
 const ts = new Date().getTime();
@@ -49,7 +50,6 @@ exports.marvelhero = async (req, res) => {
 
       // Save the document to MongoDB
       await characterData.save();
-      console.log(characterData);
     }
 
     // Send the response with all collected data
@@ -64,7 +64,6 @@ exports.db = async(req, res)=>{
   try{
     const db = await Characters.find();
     res.send(db);
-    console.log(db)
     return res.status(200);
   }
   catch(error){
@@ -72,7 +71,7 @@ exports.db = async(req, res)=>{
   }
 }
 
-const comicNames = ['wolverine', 'hulk', 'thor'];
+const comicNames = ['wolverine'];
 
 exports.marvelcomics = async (req, res) => {
   try {
@@ -80,7 +79,7 @@ exports.marvelcomics = async (req, res) => {
 
     for (const name of comicNames) {
       const marvelComicResponse = await axios.get(
-        `https://gateway.marvel.com:443/v1/public/comics?title=${name}&ts=${ts}&apikey=${publicKey}&hash=${hash}`
+        `https://gateway.marvel.com:443/v1/public/comics?title=${name}&ts=${ts}&apikey=${publicKey}&hash=${hash}&limit=12`
       );
 
       const comicData = marvelComicResponse.data;
@@ -110,7 +109,6 @@ exports.marvelcomics = async (req, res) => {
 
       // Save the document to MongoDB
       await comicData.save();
-      console.log(comicData);
     }
 
     res.send(allComicsData);
@@ -125,7 +123,6 @@ exports.comic_db = async(req, res)=>{
     try{
       const db = await Comic.find();
       res.send(db);
-      console.log(db)
       return res.status(200);
     }
     catch(error){
@@ -133,3 +130,89 @@ exports.comic_db = async(req, res)=>{
     }
   }
   
+
+  exports.comic_search = async(req, res)=>{
+    const {comicName} = req.body;
+    console.log(comicName)
+    try{
+      const response = await axios.get(`https://gateway.marvel.com:443/v1/public/comics?title=${comicName}&ts=${ts}&apikey=${publicKey}&hash=${hash}&limit=12`
+      );
+      res.send(response.data);
+      console.log(response.data);
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+
+  const CharacterName = ['spider-man'];
+
+exports.character = async (req, res) => {
+  try {
+    const CharacterData = []; // Create an array to collect data for all superheroes
+
+    // Loop through the superheroNames array
+    for (const name of CharacterName) {
+      // Make the API request with the current name
+      const marvel_hero = await axios.get(
+        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${name}&ts=${ts}&apikey=${publicKey}&hash=${hash}&limit=12`
+      );
+
+      const data = marvel_hero.data;
+      if(data.data.total !== 0){
+      CharacterData.push(data); // Add data to the array
+    }
+}
+
+    // Save the collected data to MongoDB
+    for (const data of CharacterData) {
+      const results = data.data.results;
+      const characterData = new Character({
+        code: data.code,
+        status: data.status,
+        copyright: data.copyright,
+        attributionText: data.attributionText,
+        attributionHTML: data.attributionHTML,
+        etag: data.etag,
+        results: results,
+      });
+
+      // Save the document to MongoDB
+      await characterData.save();
+    }
+
+    // Send the response with all collected data
+    res.send(CharacterData);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+
+exports.character_db = async(req, res)=>{
+  try{
+    const db = await Character.find();
+    res.send(db);
+    return res.status(200);
+  }
+  catch(error){
+    console.log(error)
+  }
+}
+
+
+exports.character_search = async(req, res)=>{
+  const {characterName} = req.body;
+  console.log(characterName)
+  try{
+    const response = await axios.get(`https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${characterName}&ts=${ts}&apikey=${publicKey}&hash=${hash}&limit=12`
+    );
+    res.send(response.data);
+    console.log(response.data);
+  }
+  catch(error){
+    console.log(error);
+  }
+}

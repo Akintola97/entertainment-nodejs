@@ -6,8 +6,8 @@ const Hero = () => {
     const [currentItemIndex, setCurrentItemIndex] = useState(0);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [isGradientExpanded, setIsGradientExpanded] = useState(false); // Track background gradient expansion
-    const transitionDelay = 20000; // 20 seconds
+    const [isGradientExpanded, setIsGradientExpanded] = useState(false); 
+    const transitionDelay = 20000; 
   
     useEffect(() => {
       fetchData();
@@ -44,22 +44,22 @@ const Hero = () => {
   
     const gradientClass = isGradientExpanded ? 'bg-gradient-to-b from-black' : 'bg-gradient-to-t from-black';
   
-    // Function to go to the previous image
+   
     const goToPrevious = () => {
       const previousIndex = (currentItemIndex - 1 + data.length) % data.length;
       setCurrentItemIndex(previousIndex);
     }
   
-    // Function to go to the next image
+
     const goToNext = () => {
       const nextIndex = (currentItemIndex + 1) % data.length;
       setCurrentItemIndex(nextIndex);
     }
   
-    // Function to truncate or display the full description
+  
     function renderDescription(description, maxLength) {
       if (!description) {
-        return ''; // Handle case where description is undefined
+        return ''; 
       }
       if (isExpanded) {
         return description;
