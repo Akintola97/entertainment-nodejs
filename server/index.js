@@ -7,6 +7,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const mongodb = process.env.MONGODB;
+const path = require('path');
 
 const routes = require('./Views/route');
 const marvel_route = require('./Views/marvelroute');
@@ -26,6 +27,15 @@ mongoose.connect(mongodb).then(() => {
 }).catch((error) => {
   console.log(error);
 });
+
+app.use('/marvel', express.static(path.join(__dirname, 'client/build')));
+
+// Catch-all route to serve the React app's HTML file
+app.get('/marvel/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
+
 
 app.listen(port, hostname, () => {
   console.log(`The server is running on ${hostname}:${port}`);
