@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Router } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -7,6 +7,7 @@ import HeroPage from './pages/HeroPage';
 import axios from 'axios';
 import AuthProvider, { useAuth } from './AuthContext';
 import Saved from './components/Saved';
+
 
 axios.defaults.withCredentials = true;
 
@@ -21,6 +22,7 @@ function App() {
   return (
     <div>
       <AuthProvider>
+        <Router basename='/marvel'>
         <Navbar />
         <Routes>
           <Route path="/" element={<Login />} />
@@ -34,6 +36,7 @@ function App() {
             element={<PrivateRoute element={<Saved />} />}
           />
         </Routes>
+        </Router>
       </AuthProvider>
     </div>
   );

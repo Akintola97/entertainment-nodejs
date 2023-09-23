@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { FaHeart } from "react-icons/fa";
+import backendUrl from '../config';
 
 const Characters = ({ charactersData }) => {
   const [characterName, setCharacterName] = useState("");
@@ -32,7 +33,7 @@ const Characters = ({ charactersData }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/marvel/character/search",
+        `${backendUrl}/marvel/character/search`,
         { characterName }
       );
       const searchData = response.data;
@@ -60,7 +61,7 @@ const Characters = ({ charactersData }) => {
   const saveCharacter = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/saveCharacter",
+        `${backendUrl}/auth/saveCharacter`,
         {
           characterId: selectedImage.id,
           characterName: selectedImage.name,

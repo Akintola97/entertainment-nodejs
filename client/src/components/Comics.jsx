@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import backendUrl from '../config';
 
 const Comics = ({ comicData }) => {
   const [comicName, setComicName] = useState("");
@@ -12,7 +12,7 @@ const Comics = ({ comicData }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/marvel/comic/search",
+        `${backendUrl}/marvel/comic/search`,
         { comicName }
       );
       const searchData = response.data;

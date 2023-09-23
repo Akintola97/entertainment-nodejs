@@ -57,6 +57,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
 import { FaTimes } from "react-icons/fa"; // Import the FaTimes icon
+import backendUrl from "../config";
 
 const Saved = () => {
   const [savedCharacters, setSavedCharacters] = useState([]);
@@ -68,7 +69,7 @@ const Saved = () => {
     const fetchSavedCharacters = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/auth/savedCharacters"
+          `${backendUrl}/auth/savedCharacters`
         );
         const fetchedCharacters = response.data;
         setSavedCharacters(fetchedCharacters);
@@ -85,7 +86,7 @@ const Saved = () => {
   const handleRemoveCharacter = async (characterId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/auth/removeCharacter/${characterId}`
+        `${backendUrl}/auth/removeCharacter/${characterId}`
       );
 
       // Update the UI by filtering out the removed character

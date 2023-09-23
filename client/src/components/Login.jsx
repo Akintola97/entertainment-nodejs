@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import backendUrl from "../config";
+
 
 const Login = () => {
   const { setUser } = useAuth();
@@ -14,7 +16,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/auth/login", {
+      const response = await axios.post(`${backendUrl}/auth/login`, {
         username,
         password,
       });

@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import backendUrl from './config';
+
+
 
 const AuthContext = createContext();
 
@@ -18,7 +21,7 @@ const AuthProvider = ({ children }) => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/auth/userinfo');
+      const response = await axios.get(`${backendUrl}/auth/userinfo`);
       setUser(response.data.username);
     } catch (error) {
       setUser(null);
@@ -28,7 +31,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.get('http://localhost:5000/auth/logout', {
+      await axios.get(`${backendUrl}/auth/logout`, {
         withCredentials: true,
       });
       setUser(null);

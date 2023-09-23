@@ -12,7 +12,8 @@ const routes = require('./Views/route');
 const marvel_route = require('./Views/marvelroute');
 
 // Allow requests from the frontend origin for all routes
-app.use(cors({ credentials: true, origin: "http://localhost:3000"}));
+// app.use(cors({ credentials: true, origin: "http://localhost:3000"}));
+app.use(cors({ credentials: true, origin: "https://boltluna.io"}));
 app.use(express.json());
 app.use(cookieParser());
 
