@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const hostname = 'localhost';
-const port = 5000;
+const hostname = process.env.HOSTNAME || '0.0.0.0';
+const port = process.env.PORT || 5000;
 require('dotenv').config();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');

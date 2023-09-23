@@ -4,6 +4,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 const SavedItem = require('../Model/savedItems')
+const isProduction = process.env.NODE_ENV === 'production';
+
+
 
 exports.register = async (req, res) => {
   const { username, password } = req.body;
@@ -56,6 +59,7 @@ exports.login = async (req, res) => {
       path: '/',
       httpOnly: true,
       maxAge: 3600000, 
+      secure: isProduction
     });
 
     res.status(200).json({ message: "Login Successful" });
