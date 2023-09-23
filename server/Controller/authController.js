@@ -172,7 +172,7 @@ exports.getSavedCharacters = async (req, res) => {
 
 
 
-// Add this route to your server.js or routes file
+
 exports.removeCharacter = async (req, res) => {
   const characterId = req.params.characterId;
   const userId = req.userId;
