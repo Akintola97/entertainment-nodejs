@@ -6,6 +6,11 @@ import Register from "./components/Register";
 import HeroPage from "./pages/HeroPage";
 import axios from "axios";
 import AuthProvider from "./AuthContext";
+import Saved from "./components/Saved";
+
+
+
+
 
 axios.defaults.withCredentials = true;
 
@@ -19,6 +24,7 @@ function App() {
           <Route path='/' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/heropage' element={<HeroPage />} />
+          <Route path='/saved' element={<Saved />} />
         </Routes>
         </AuthProvider>
     </div>

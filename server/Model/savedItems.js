@@ -1,20 +1,19 @@
 const mongoose = require('mongoose');
 
-const savedItemSchema = new mongoose.Schema({
+const savedContentSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
+    ref: 'User', // Reference to the User model for user association
   },
   itemType: {
     type: String,
     enum: ['character', 'comic'], // Add more item types if needed
   },
-  item: {
-    type: mongoose.Schema.Types.ObjectId,
-    refPath: 'itemType', // Reference the appropriate model based on itemType
-  },
+  imageUrl: String, // URL to the image in your storage solution
+  description: String, // Description text
+  // Add more fields as needed
 }, { timestamps: true });
 
-const savedItem = mongoose.model('SavedItem', savedItemSchema);
+const SavedContent = mongoose.model('SavedContent', savedContentSchema);
 
-module.exports = savedItem;
+module.exports = SavedContent;
