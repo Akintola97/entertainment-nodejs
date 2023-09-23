@@ -12,7 +12,7 @@ const Characters = ({ charactersData }) => {
 
   const [openModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isSaved, setIsSaved] = useState(false); 
+  const [isSaved, setIsSaved] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
@@ -59,27 +59,29 @@ const Characters = ({ charactersData }) => {
 
   const saveCharacter = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/auth/saveCharacter', {
-        characterId: selectedImage.id,
-        characterName: selectedImage.name,
-        imageUrl: selectedImage.src,
-        description: selectedImage.description,
-      });
-  
+      const response = await axios.post(
+        "http://localhost:5000/auth/saveCharacter",
+        {
+          characterId: selectedImage.id,
+          characterName: selectedImage.name,
+          imageUrl: selectedImage.src,
+          description: selectedImage.description,
+        }
+      );
+
       if (response.status === 200) {
         setSuccessMessage(response.data.message);
-        window.alert(successMessage)
-        setIsSaved(true); 
+        window.alert(successMessage);
+        setIsSaved(true);
       }
     } catch (error) {
-      console.error('Error saving character:', error);
+      console.error("Error saving character:", error);
       if (error.response && error.response.status === 400) {
         setErrorMessage(error.response.data.message);
         window.alert(errorMessage);
       }
     }
   };
-  
 
   const charactersToRender =
     searchedCharacterData.length > 0
@@ -128,8 +130,9 @@ const Characters = ({ charactersData }) => {
                     id: character.id,
                     src: `${character.thumbnail.path}.${character.thumbnail.extension}`,
                     alt: character.title,
-                    description: character.description || "No description available",
-                    name: character.name, 
+                    description:
+                      character.description || "No description available",
+                    name: character.name,
                   })
                 }
               />
@@ -139,33 +142,42 @@ const Characters = ({ charactersData }) => {
         ))}
       </div>
       <Modal
-  open={openModal}
-  onClose={closeImageModal}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
-  <Box sx={modalStyle}>
-  <Typography id="modal-modal-title" variant="h6">
-      {selectedImage?.name}
-    </Typography>
-    <img src={selectedImage?.src} alt={selectedImage?.alt} className="max-w-full" />
-    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-      {selectedImage?.description}
-    </Typography>
-    <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 'auto' }}>
-      <FaHeart
-        size={24}
-        color={isSaved ? 'red' : 'black'} 
-        onClick={() => {
-          if (!isSaved) {
-            saveCharacter();
-          }
-        }}
-      />
-    </Box>
-  </Box>
-</Modal>
-
+        open={openModal}
+        onClose={closeImageModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6">
+            {selectedImage?.name}
+          </Typography>
+          <img
+            src={selectedImage?.src}
+            alt={selectedImage?.alt}
+            className="max-w-full"
+          />
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            {selectedImage?.description}
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "auto",
+            }}
+          >
+            <FaHeart
+              size={24}
+              color={isSaved ? "red" : "black"}
+              onClick={() => {
+                if (!isSaved) {
+                  saveCharacter();
+                }
+              }}
+            />
+          </Box>
+        </Box>
+      </Modal>
     </div>
   );
 };
