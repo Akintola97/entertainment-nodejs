@@ -172,3 +172,24 @@ exports.getSavedCharacters = async (req, res) => {
 
 
 
+// Add this route to your server.js or routes file
+exports.removeCharacter = async (req, res) => {
+  const characterId = req.params.characterId;
+  const userId = req.userId;
+
+  try {
+    // Check if the character with the provided characterId belongs to the logged-in user
+    const deletedCharacter = await SavedItem.deleteOne({ _id: characterId, user: userId });
+
+    if (deletedCharacter.deletedCount === 0) {
+      return res.status(404).json({ message: 'Character not found or does not belong to the user' });
+    }
+
+    res.status(200).json({ message: 'Character removed successfully' });
+  } catch (error) {
+    console.error('Error removing character:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+
