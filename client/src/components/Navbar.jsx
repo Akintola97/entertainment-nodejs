@@ -8,9 +8,9 @@ const Navbar = () => {
   return (
     <div className="fixed top-0 left-0 right-0 bg-black w-full h-[8vh] flex text-white items-center z-10">
       <div className="w-full">
-        <h2>Marvel Search</h2>
+        <h2 className="p-5 text-[3vmin]">Marvel Heroes</h2>
       </div>
-      <div className="w-full flex flex-wrap items-center justify-end">
+      <div className="w-full flex flex-wrap items-center justify-end p-2">
         {user ? (
           <div className="flex items-center">
             <p className="p-2 sm:p-5">Hi, {user}</p>
