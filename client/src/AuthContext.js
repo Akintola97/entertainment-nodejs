@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
       const response = await axios.get('http://localhost:5000/auth/userinfo');
       setUser(response.data.username);
     } catch (error) {
-      setUser(null); // Set user to null when not authenticated
+      setUser(null);
       console.log(error);
     }
   };
@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
       await axios.get('http://localhost:5000/auth/logout', {
         withCredentials: true,
       });
-      setUser(null); // Clear the user data from state
+      setUser(null);
       navigate('/');
     } catch (error) {
       console.log(error);

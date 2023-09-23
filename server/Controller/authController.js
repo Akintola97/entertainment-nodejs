@@ -55,7 +55,7 @@ exports.login = async (req, res) => {
     res.cookie('authToken', token, {
       path: '/',
       httpOnly: true,
-      maxAge: 3600000, // 1hr in milliseconds
+      maxAge: 3600000, 
     });
 
     res.status(200).json({ message: "Login Successful" });
@@ -83,10 +83,10 @@ exports.authenticate = async (req, res, next) => {
       return res.status(400).json({ message: "User not found" });
     }
 
-    // Set userId in req object
+
     req.userId = userId;
 
-    // Call next to pass control to the next middleware
+
     next();
   } catch (error) {
     console.error(error);
@@ -126,28 +126,27 @@ exports.logout = async(req, res) =>{
 
 
 
-// Save a character to a user's saved list
-
-
 exports.saveCharacter = async (req, res) => {
   const userId  = req.userId
-  const { characterName, characterId, imageUrl, description } = req.body; // Capture image URL and description
+  const { characterName, characterId, imageUrl, description } = req.body; 
 
   try {
-    // Create a new SavedContent document for the character
     const savedContent = new SavedItem({
       user: userId,
       itemType: 'character',
       characterName,
-      characterId, // Save the characterId
-      imageUrl, // Store the image URL
-      description, // Store the description
+      characterId, 
+      imageUrl, 
+      description, 
     });
 
     await savedContent.save();
 
     res.status(200).json({ message: 'Character saved successfully' });
   } catch (error) {
+    if(error.code === 11000 && error.keyPattern.characterId){
+      return res.status(400).json({message: "Character with this ID already saved"});
+    }
     console.error(error);
     res.status(500).json({ message: 'Server Error' });
   }
@@ -161,7 +160,6 @@ exports.saveCharacter = async (req, res) => {
 exports.getSavedCharacters = async (req, res) => {
   const userId  = req.userId
   try {
-    // Find all saved character content for the user
     const savedCharacters = await SavedItem.find();
 
     res.status(200).json(savedCharacters);

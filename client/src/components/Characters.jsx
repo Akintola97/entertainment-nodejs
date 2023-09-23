@@ -13,11 +13,12 @@ const Characters = ({ charactersData }) => {
 
   const [openModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isSaved, setIsSaved] = useState(false); // Track whether the character is saved
+  const [isSaved, setIsSaved] = useState(false); 
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const openImageModal = (image) => {
     setSelectedImage(image);
-    setIsSaved(false); // Reset the saved state when opening a new image modal
+    setIsSaved(false);
     setOpenModal(true);
   };
 
@@ -60,16 +61,20 @@ const Characters = ({ charactersData }) => {
     try {
       const response = await axios.post('http://localhost:5000/auth/saveCharacter', {
         characterId: selectedImage.id,
-        characterName: selectedImage.name, // Add the character name here
+        characterName: selectedImage.name,
         imageUrl: selectedImage.src,
         description: selectedImage.description,
       });
   
       if (response.status === 200) {
-        setIsSaved(true); // Character is saved, change the heart icon color to red
+        setIsSaved(true); 
       }
     } catch (error) {
       console.error('Error saving character:', error);
+      if (error.response && error.response.status === 400) {
+        setErrorMessage(error.response.data.message);
+        window.alert(error.response.data.message);
+      }
     }
   };
   
@@ -148,10 +153,10 @@ const Characters = ({ charactersData }) => {
     <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 'auto' }}>
       <FaHeart
         size={24}
-        color={isSaved ? 'red' : 'black'} // Change the heart icon color based on isSaved state
+        color={isSaved ? 'red' : 'black'} 
         onClick={() => {
           if (!isSaved) {
-            saveCharacter(); // Save the character when the heart icon is clicked
+            saveCharacter();
           }
         }}
       />

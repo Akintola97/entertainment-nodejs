@@ -9,10 +9,14 @@ const savedContentSchema = new mongoose.Schema({
     type: String,
     enum: ['character', 'comic'], // Add more item types if needed
   },
-  characterName: String, // Add a field for the character name
-  imageUrl: String, // URL to the image in your storage solution
-  description: String, // Description text
-  // Add more fields as needed
+  characterId: {
+    type: String,
+    unique: true, 
+    required: true, 
+  },
+  characterName: String, 
+  imageUrl: String,
+  description: String, 
 }, { timestamps: true });
 
 

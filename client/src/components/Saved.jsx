@@ -6,21 +6,20 @@ const Saved = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch saved characters when the component mounts
     const fetchSavedCharacters = async () => {
       try {
         const response = await axios.get('http://localhost:5000/auth/savedCharacters');
         const fetchedCharacters = response.data;
         setSavedCharacters(fetchedCharacters);
-        setIsLoading(false); // Data has been fetched
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching saved characters:', error);
-        setIsLoading(false); // Handle error, data fetching is complete
+        setIsLoading(false);
       }
     };
 
     fetchSavedCharacters();
-  }, []); // Empty dependency array ensures this effect runs once when the component mounts
+  }, []);
 
   return (
     <div>
