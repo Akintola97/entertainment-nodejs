@@ -65,56 +65,6 @@ exports.login = async (req, res) => {
   }
 };
 
-// exports.authenticate = async (req, res) => {
-//   const authToken = req.cookies.authToken;
-//   // console.log(authToken)
-
-//   if (!authToken) {
-//     return res.status(401).json({ message: "Authentication failed - Token missing" });
-//   }
-
-//   try {
-//     const decodedToken = jwt.verify(authToken, secret);
-//     const userId = decodedToken.userId;
-//     const user = await User.findById(userId);
-
-//     if (!user) {
-//       return res.status(400).json({ message: "User not found" });
-//     }
-
-//     res.status(200).json({ username: user.username });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Server Error' });
-//   }
-// };
-
-// // server/authController.js
-
-// // exports.authenticate = async (req, res) => {
-// //   const authToken = req.cookies.authToken;
-
-// //   if (!authToken) {
-// //     return res.status(401).json({ message: "Authentication failed - Token missing" });
-// //   }
-
-// //   try {
-// //     const decodedToken = jwt.verify(authToken, secret);
-// //     const userId = decodedToken.userId;
-// //     const user = await User.findById(userId);
-
-// //     if (!user) {
-// //       return res.status(400).json({ message: "User not found" });
-// //     }
-
-// //     req.userId = userId;
-// //     next();
-// //   } catch (error) {
-// //     console.error(error);
-// //     res.status(500).json({ message: 'Server Error' });
-// //   }
-// // };
-
 
 
 exports.authenticate = async (req, res, next) => {
@@ -181,13 +131,14 @@ exports.logout = async(req, res) =>{
 
 exports.saveCharacter = async (req, res) => {
   const userId  = req.userId
-  const { characterId, imageUrl, description } = req.body; // Capture image URL and description
+  const { characterName, characterId, imageUrl, description } = req.body; // Capture image URL and description
 
   try {
     // Create a new SavedContent document for the character
     const savedContent = new SavedItem({
       user: userId,
       itemType: 'character',
+      characterName,
       characterId, // Save the characterId
       imageUrl, // Store the image URL
       description, // Store the description
@@ -208,9 +159,7 @@ exports.saveCharacter = async (req, res) => {
 
 
 exports.getSavedCharacters = async (req, res) => {
-  const { userId } = req;
-  console.log(userId)
-
+  const userId  = req.userId
   try {
     // Find all saved character content for the user
     const savedCharacters = await SavedItem.find();

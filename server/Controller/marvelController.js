@@ -133,12 +133,10 @@ exports.comic_db = async(req, res)=>{
 
   exports.comic_search = async(req, res)=>{
     const {comicName} = req.body;
-    console.log(comicName)
     try{
       const response = await axios.get(`https://gateway.marvel.com:443/v1/public/comics?title=${comicName}&ts=${ts}&apikey=${publicKey}&hash=${hash}&limit=12`
       );
       res.send(response.data);
-      console.log(response.data);
     }
     catch(error){
       console.log(error);
@@ -205,12 +203,10 @@ exports.character_db = async(req, res)=>{
 
 exports.character_search = async(req, res)=>{
   const {characterName} = req.body;
-  console.log(characterName)
   try{
     const response = await axios.get(`https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${characterName}&ts=${ts}&apikey=${publicKey}&hash=${hash}&limit=12`
     );
     res.send(response.data);
-    console.log(response.data);
   }
   catch(error){
     console.log(error);
