@@ -22,7 +22,7 @@ const Login = () => {
       });
       if (response.status === 200) {
         setUser(username);
-        navigate("/heropage");
+        navigate("/marvel/heropage");
       } else {
         console.log("Login failed");
       }
@@ -77,7 +77,7 @@ const Login = () => {
             type="submit"
             className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded-md focus:outline-none focus:shadow-outline-green active:bg-green-700 ml-2"
           >
-            <Link to="/register">Register</Link>
+            <Link to="/marvel/register">Register</Link>
           </button>
         </form>
       </div>

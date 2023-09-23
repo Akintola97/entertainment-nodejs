@@ -14,10 +14,10 @@ const Navbar = () => {
         {user ? (
           <div className="flex items-center">
             <p className="text-[2.2vmin] p-2 md:p-5">Hi, {user}</p>
-            <Link to="/heropage">
+            <Link to="/marvel/heropage">
               <p className="text-[2.2vmin]">Home</p>
             </Link>
-            <Link to="/saved">
+            <Link to="/marvel/saved">
               <p className="text-[2.2vmin] p-2 md:p-5">Saved</p>
             </Link>
             <button

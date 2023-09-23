@@ -22,21 +22,19 @@ function App() {
   return (
     <div>
       <AuthProvider>
-        <Router basename='/marvel'>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/marvel" element={<Login />} />
+          <Route path="/marvel/register" element={<Register />} />
           <Route
-            path="/heropage"
+            path="/marvel/heropage"
             element={<PrivateRoute element={<HeroPage />} />}
           />
           <Route
-            path="/saved"
+            path="/marvel/saved"
             element={<PrivateRoute element={<Saved />} />}
           />
         </Routes>
-        </Router>
       </AuthProvider>
     </div>
   );

@@ -62,7 +62,7 @@ const Register = () => {
             type="submit"
             className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded-md focus:outline-none focus:shadow-outline-green active:bg-green-700 ml-2"
           >
-            <Link to="/">Login</Link>
+            <Link to="/marvel">Login</Link>
           </button>
         </form>
       </div>
