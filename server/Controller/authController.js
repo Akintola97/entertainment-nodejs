@@ -57,6 +57,7 @@ exports.login = async (req, res) => {
 
     res.cookie('authToken', token, {
       path: '/',
+      domain: 'marvel-search-app.onrender.com',
       httpOnly: true,
       maxAge: 3600000, 
       secure: isProduction
