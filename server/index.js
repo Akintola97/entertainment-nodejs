@@ -27,11 +27,12 @@ mongoose.connect(mongodb).then(() => {
   console.log(error);
 });
 
-app.use('/marvel', express.static(path.join(__dirname, '../client/build')));
+app.use('/marvel', express.static(path.join(__dirname, 'client/build')));
+
 
 // Catch-all route to serve the React app's HTML file
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 
