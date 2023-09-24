@@ -132,12 +132,12 @@ exports.logout = async(req, res) =>{
 
 
 exports.saveCharacter = async (req, res) => {
-  const userId  = req.userId
+  // const userId  = req.userId
   const { characterName, characterId, imageUrl, description } = req.body; 
 
   try {
     const savedContent = new SavedItem({
-      user: userId,
+      // user: userId,
       itemType: 'character',
       characterName,
       characterId, 
@@ -163,7 +163,7 @@ exports.saveCharacter = async (req, res) => {
 
 
 exports.getSavedCharacters = async (req, res) => {
-  const userId  = req.userId
+  // const userId  = req.userId
   try {
     const savedCharacters = await SavedItem.find();
 
