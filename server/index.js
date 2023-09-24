@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-const hostname = process.env.HOSTNAME || '0.0.0.0';
-const port = process.env.PORT || 5000;
+// const hostname = process.env.HOSTNAME || '0.0.0.0';
+const port = process.env.PORT||10000; 
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
@@ -37,8 +37,8 @@ app.get('/marvel/*', (req, res) => {
 
 
 
-app.listen(port, hostname, () => {
-  console.log(`The server is running on ${hostname}:${port}`);
+app.listen(port, () => {
+  console.log(`The server is running on ${port}`);
 });
 
 
