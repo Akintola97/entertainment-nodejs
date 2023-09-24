@@ -15,7 +15,7 @@ axios.defaults.withCredentials = true;
 function PrivateRoute({ element }) {
   const { user } = useAuth();
 
-  return user ? element : <Navigate to="/" />;
+  return user ? element : <Navigate to="/" replace />;
 }
 
 function App() {
