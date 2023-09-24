@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-// const hostname = process.env.HOSTNAME || '0.0.0.0';
 const port = process.env.PORT||10000; 
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -14,7 +13,7 @@ const marvel_route = require('./Views/marvelroute');
 
 // Allow requests from the frontend origin for all routes
 // app.use(cors({ credentials: true, origin: "http://localhost:3000"}));
-app.use(cors({ credentials: true, origin: "https://boltluna.io"}));
+app.use(cors({ credentials: true, origin: "https://boltluna.io/marvel"}));
 app.use(express.json());
 app.use(cookieParser());
 
