@@ -32,7 +32,7 @@ const Navbar = () => {
 
           </div>
         ) : (
-          <Link to="/">
+          <Link to="/marvel">
             <button className="bg-green-500 hover:bg-green-600 text-white py-2 px-3 sm:px-4 rounded transition duration-300 ease-in-out text-[2.0vmin]">
               Login
             </button>
