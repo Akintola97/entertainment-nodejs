@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
         withCredentials: true,
       });
       setUser(null);
-      navigate('/');
+      navigate('/marvel');
     } catch (error) {
       console.log(error);
     }
