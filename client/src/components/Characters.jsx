@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import { FaHeart } from "react-icons/fa";
 import backendUrl from '../config';
 
+axios.defaults.withCredentials = true;
+
 const Characters = ({ charactersData }) => {
   const [characterName, setCharacterName] = useState("");
   const [searchedCharacterData, setSearchedCharacterData] = useState([]);
