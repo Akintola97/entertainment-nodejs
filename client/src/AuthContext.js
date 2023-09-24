@@ -29,12 +29,16 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const clearCookie = () => {
+    document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  };
   const logout = async () => {
     try {
       await axios.get(`${backendUrl}/auth/logout`, {
         withCredentials: true,
       });
       setUser(null);
+      clearCookie();
       navigate('/marvel');
     } catch (error) {
       console.log(error);
