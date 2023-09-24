@@ -14,10 +14,13 @@ const Register = () => {
     setUsername("");
 
     try {
-      await axios.post(`${backendUrl}/auth/register`, {
+     const response = await axios.post(`${backendUrl}/auth/register`, {
         username,
         password,
       });
+    if (response.status === 200){
+      alert(response.data.message)
+    }
     } catch (error) {
       console.log(error);
     }
