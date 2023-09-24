@@ -60,7 +60,8 @@ exports.login = async (req, res) => {
       // domain: 'marvel-search-app.onrender.com',
       httpOnly: true,
       maxAge: 3600000, 
-      secure: isProduction
+      secure: isProduction,
+      sameSite: 'None'
     });
 
     res.status(200).json({ message: "Login Successful" });
@@ -132,12 +133,12 @@ exports.logout = async(req, res) =>{
 
 
 exports.saveCharacter = async (req, res) => {
-  // const userId  = req.userId
+  const userId  = req.userId
   const { characterName, characterId, imageUrl, description } = req.body; 
 
   try {
     const savedContent = new SavedItem({
-      // user: userId,
+      user: userId,
       itemType: 'character',
       characterName,
       characterId, 
@@ -163,7 +164,7 @@ exports.saveCharacter = async (req, res) => {
 
 
 exports.getSavedCharacters = async (req, res) => {
-  // const userId  = req.userId
+  const userId  = req.userId
   try {
     const savedCharacters = await SavedItem.find();
 
