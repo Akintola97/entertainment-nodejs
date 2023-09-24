@@ -121,8 +121,8 @@ exports.userInfo = async (req, res) => {
 
 exports.logout = async(req, res) =>{
   try{
-    res.clearCookie('authToken');
-    res.redirect('/marvel');
+    res.clearCookie('authToken', {path:'/'});
+    res.status(200).json({message: "Logout Successful"});
   }
   catch(error){
     console.log(error);
