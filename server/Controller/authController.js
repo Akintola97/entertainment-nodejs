@@ -166,7 +166,7 @@ exports.saveCharacter = async (req, res) => {
 exports.getSavedCharacters = async (req, res) => {
   const userId  = req.userId
   try {
-    const savedCharacters = await SavedItem.find();
+    const savedCharacters = await SavedItem.find({user: userId});
 
     res.status(200).json(savedCharacters);
   } catch (error) {
