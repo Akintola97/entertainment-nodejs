@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { FaHeart } from "react-icons/fa";
-import backendUrl from '../config';
+import backendUrl from "../config"
 
 
 axios.defaults.withCredentials = true;

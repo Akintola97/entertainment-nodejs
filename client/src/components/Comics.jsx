@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import backendUrl from '../config';
-import localhostUrl from '../localhostconfig';
+
 
 const Comics = ({ comicData }) => {
   const [comicName, setComicName] = useState("");
