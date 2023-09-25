@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// import backendUrl from './config';
-import localhostUrl from './localhostconfig';
+import backendUrl from './config';
+
 
 
 
@@ -22,9 +22,7 @@ const AuthProvider = ({ children }) => {
 
   const fetchData = async () => {
     try {
-      // const response = await axios.get(`${backendUrl}/auth/userinfo`);
-      // setUser(response.data.username);
-      const response = await axios.get(`${localhostUrl}/auth/userinfo`);
+      const response = await axios.get(`${backendUrl}/auth/userinfo`);
       setUser(response.data.username);
     } catch (error) {
       setUser(null);
@@ -32,21 +30,14 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const clearCookie = () => {
-    // document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-  };
+
   const logout = async () => {
     try {
-      // await axios.get(`${backendUrl}/auth/logout`, {
-      //   withCredentials: true,
-      // });
-      await axios.get(`${localhostUrl}/auth/logout`, {
+      await axios.get(`${backendUrl}/auth/logout`, {
         withCredentials: true,
-      });
+      })
       setUser(null);
-      // clearCookie();
-      // navigate('/marvel');
-      navigate('/');
+      navigate('/marvel');
     } catch (error) {
       console.log(error);
     }
