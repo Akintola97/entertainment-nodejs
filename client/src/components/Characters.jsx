@@ -68,6 +68,9 @@ const Characters = ({ charactersData }) => {
           characterName: selectedImage.name,
           imageUrl: selectedImage.src,
           description: selectedImage.description,
+        },
+        {
+          withCredentials: true,
         }
       );
 

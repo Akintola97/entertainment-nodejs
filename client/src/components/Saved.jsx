@@ -31,8 +31,8 @@ const Saved = () => {
   const handleRemoveCharacter = async (characterId) => {
     try {
       await axios.delete(
-        `${backendUrl}/auth/removeCharacter/${characterId}`
-      );
+        `${backendUrl}/auth/removeCharacter/${characterId}`,
+      {withCredentials: true});
       setSavedCharacters((prevCharacters) =>
         prevCharacters.filter((character) => character._id !== characterId)
       );
