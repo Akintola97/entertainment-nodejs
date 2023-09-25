@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 const SavedItem = require('../Model/savedItems')
-const isProduction = process.env.NODE_ENV === 'production';
+
 
 
 
@@ -57,11 +57,10 @@ exports.login = async (req, res) => {
 
     res.cookie('authToken', token, {
       path: '/',
-      // domain: 'marvel-search-app.onrender.com',
       httpOnly: true,
       maxAge: 3600000, 
-      secure: isProduction,
-      sameSite: 'None'
+      secure: true,
+      sameSite: 'none'
     });
 
     res.status(200).json({ message: "Login Successful" });
