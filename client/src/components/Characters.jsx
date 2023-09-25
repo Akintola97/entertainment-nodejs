@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import { FaHeart } from "react-icons/fa";
 import backendUrl from '../config';
 
+
 axios.defaults.withCredentials = true;
 
 const Characters = ({ charactersData }) => {
@@ -61,7 +62,7 @@ const Characters = ({ charactersData }) => {
   const saveCharacter = async () => {
     try {
       const response = await axios.post(
-        `${backendUrl}/auth/saveCharacter`,
+      `${backendUrl}/auth/saveCharacter`,
         {
           characterId: selectedImage.id,
           characterName: selectedImage.name,

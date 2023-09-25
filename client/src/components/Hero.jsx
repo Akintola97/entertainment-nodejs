@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import backendUrl from "../config";
 
+
 const Hero = () => {
   const [data, setData] = useState([]);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);

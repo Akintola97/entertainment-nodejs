@@ -11,6 +11,7 @@ import Comics from "./Comics";
 import Characters from "./Characters";
 import backendUrl from "../config";
 
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 

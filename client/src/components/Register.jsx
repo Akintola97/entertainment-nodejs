@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import backendUrl from "../config";
@@ -7,6 +7,7 @@ import backendUrl from "../config";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const naviage = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +21,7 @@ const Register = () => {
       });
     if (response.status === 200){
       alert(response.data.message)
+      naviage('/marvel')
     }
     } catch (error) {
       console.log(error);
@@ -66,6 +68,7 @@ const Register = () => {
             className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded-md focus:outline-none focus:shadow-outline-green active:bg-green-700 ml-2"
           >
             <Link to="/marvel">Login</Link>
+           
           </button>
         </form>
       </div>

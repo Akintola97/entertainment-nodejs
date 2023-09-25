@@ -22,7 +22,6 @@ const Navbar = () => {
             <Link to="/marvel/saved">
               <p className="text-[2.2vmin] p-2 md:p-5">Saved</p>
             </Link>
-            
             <button
               onClick={logout}
               className="bg-red-500 hover:bg-red-600 text-white py-2 px-3 sm:px-4 rounded transition duration-300 ease-in-out text-[2.4vmin]"
@@ -37,6 +36,7 @@ const Navbar = () => {
               Login
             </button>
           </Link>
+        
         )}
       </div>
     </div>

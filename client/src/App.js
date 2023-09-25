@@ -34,7 +34,7 @@ function App() {
             path="/marvel/saved"
             element={<PrivateRoute element={<Saved />} />}
           />
-           {/* <Route path="*" element={<Navigate to="/marvel" />} /> */}
+           <Route path="*" element={<Navigate to="/marvel" />} />
         </Routes>
       </AuthProvider>
     </div>

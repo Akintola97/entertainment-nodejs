@@ -20,11 +20,14 @@ const Login = () => {
         username,
         password,
       });
+  
       if (response.status === 200) {
         setUser(username);
+        window.alert(response.data.message)
         navigate("/marvel/heropage");
       } else {
         console.log("Login failed");
+        window.alert(response.data.message)
       }
     } catch (error) {
       console.log(error);
@@ -77,7 +80,7 @@ const Login = () => {
             type="submit"
             className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded-md focus:outline-none focus:shadow-outline-green active:bg-green-700 ml-2"
           >
-            <Link to="/marvel/register">Register</Link>
+            <Link to="/marvel/register">Register</Link> 
           </button>
         </form>
       </div>

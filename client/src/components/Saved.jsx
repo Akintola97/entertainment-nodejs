@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
-import { FaTimes } from "react-icons/fa"; // Import the FaTimes icon
+import { FaTimes } from "react-icons/fa";
 import backendUrl from "../config";
 
 const Saved = () => {
@@ -33,8 +33,6 @@ const Saved = () => {
       await axios.delete(
         `${backendUrl}/auth/removeCharacter/${characterId}`
       );
-
-      // Update the UI by filtering out the removed character
       setSavedCharacters((prevCharacters) =>
         prevCharacters.filter((character) => character._id !== characterId)
       );
