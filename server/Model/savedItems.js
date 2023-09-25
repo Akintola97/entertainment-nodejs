@@ -11,7 +11,6 @@ const savedContentSchema = new mongoose.Schema({
   },
   characterId: {
     type: String,
-    unique: true, 
     required: true, 
   },
   characterName: String, 

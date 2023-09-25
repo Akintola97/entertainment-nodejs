@@ -61,31 +61,44 @@ const Characters = ({ charactersData }) => {
 
   const saveCharacter = async () => {
     try {
-      const response = await axios.post(
-      `${backendUrl}/auth/saveCharacter`,
-        {
-          characterId: selectedImage.id,
-          characterName: selectedImage.name,
-          imageUrl: selectedImage.src,
-          description: selectedImage.description,
-        },
+      // Check if the character with the same characterId already exists in the user's saved content
+      const existingCharacter = await axios.get(
+        `${backendUrl}/auth/savedCharacters/${selectedImage.id}`,
         {
           withCredentials: true,
         }
       );
-
-      if (response.status === 200) {
-        window.alert(response.data.message);
-        setIsSaved(true);
+  
+      if (existingCharacter.data && existingCharacter.data.length > 0) {
+        window.alert("Character already saved");
+      } else {
+        // Character doesn't exist in saved content, proceed to save it
+        const response = await axios.post(
+          `${backendUrl}/auth/saveCharacter`,
+          {
+            characterId: selectedImage.id,
+            characterName: selectedImage.name,
+            imageUrl: selectedImage.src,
+            description: selectedImage.description,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+  
+        if (response.status === 200) {
+          window.alert(response.data.message);
+          setIsSaved(true);
+        }
       }
     } catch (error) {
       console.error("Error saving character:", error);
       if (error.response && error.response.status === 400) {
         window.alert(error.response.data.message);
-    
       }
     }
   };
+  
 
   const charactersToRender =
     searchedCharacterData.length > 0
