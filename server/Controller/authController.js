@@ -131,65 +131,49 @@ exports.logout = async(req, res) =>{
 
 
 
-// exports.saveCharacter = async (req, res) => {
-//   const userId  = req.userId
-//   const { characterName, characterId, imageUrl, description } = req.body; 
-
-//   try {
-//     const savedContent = new SavedItem({
-//       user: userId,
-//       itemType: 'character',
-//       characterName,
-//       characterId, 
-//       imageUrl, 
-//       description, 
-//     });
-
-//     await savedContent.save();
-
-//     res.status(200).json({ message: 'Character saved successfully' });
-//   } catch (error) {
-//     if(error.code === 11000 && error.keyPattern.characterId){
-//       return res.status(400).json({message: "Character with this ID already saved"});
-//     }
-//     console.error(error);
-//     res.status(500).json({ message: 'Server Error' });
-//   }
-// };
-
-// Import necessary modules and models
-
-// ... (existing imports)
-
 exports.saveCharacter = async (req, res) => {
-  const userId = req.userId;
-  const { characterName, characterId, imageUrl, description } = req.body;
+  const userId  = req.userId
+  const { characterName, characterId, imageUrl, description } = req.body; 
 
   try {
-    // Check if the character with the same characterId already exists in the user's saved content
-    const existingCharacter = await SavedItem.findOne({
-      user: userId,
-      characterId: characterId,
-    });
-
-    if (existingCharacter) {
-      return res
-        .status(400)
-        .json({ message: "Character with this ID already saved" });
-    }
-
     const savedContent = new SavedItem({
       user: userId,
-      itemType: "character",
+      itemType: 'character',
       characterName,
-      characterId,
-      imageUrl,
-      description,
+      characterId, 
+      imageUrl, 
+      description, 
     });
 
     await savedContent.save();
 
-    res.status(200).json({ message: "Character saved successfully" });
+    res.status(200).json({ message: 'Character saved successfully' });
+  } catch (error) {
+    if(error.code === 11000 && error.keyPattern.characterId){
+      return res.status(400).json({message: "Character with this ID already saved"});
+    }
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+
+exports.getSavedCharacterById = async (req, res) => {
+  const userId = req.userId;
+  const characterId = req.params.characterId;
+
+  try {
+    const savedCharacter = await SavedItem.findOne({
+      user: userId,
+      characterId: characterId,
+    });
+
+    if (!savedCharacter) {
+      return res.status(404).json({ message: "Character not found" });
+    }
+
+    // You can customize the response as needed
+    res.status(200).json(savedCharacter);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
@@ -236,9 +220,6 @@ exports.getSavedCharacters = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
-
-
-
 
 
 exports.removeCharacter = async (req, res) => {
