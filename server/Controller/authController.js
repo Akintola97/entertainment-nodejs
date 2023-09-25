@@ -60,8 +60,8 @@ exports.login = async (req, res) => {
       // domain: 'marvel-search-app.onrender.com',
       httpOnly: true,
       maxAge: 3600000, 
-      // secure: isProduction,
-      // sameSite: 'None'
+      secure: isProduction,
+      sameSite: 'None'
     });
 
     res.status(200).json({ message: "Login Successful" });
