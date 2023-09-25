@@ -158,14 +158,40 @@ exports.saveCharacter = async (req, res) => {
 };
 
 
+// exports.getSavedCharacterById = async (req, res) => {
+//   const userId = req.userId;
+//   const characterId = req.params.characterId;
+
+//   try {
+//     const savedCharacter = await SavedItem.findOne({
+//       user: userId,
+//       characterId: characterId,
+//     });
+
+//     if (!savedCharacter) {
+//       return res.status(404).json({ message: "Character not found" });
+//     }
+
+//     // You can customize the response as needed
+//     res.status(200).json(savedCharacter);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Server Error" });
+//   }
+// };
+
 exports.getSavedCharacterById = async (req, res) => {
   const userId = req.userId;
   const characterId = req.params.characterId;
 
   try {
+    // Ensure characterId is a string
+    const characterIdString = characterId.toString();
+
+    // Find the saved character by both user and characterId
     const savedCharacter = await SavedItem.findOne({
       user: userId,
-      characterId: characterId,
+      characterId: characterIdString, // Ensure characterId is a string
     });
 
     if (!savedCharacter) {
@@ -179,6 +205,7 @@ exports.getSavedCharacterById = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
 
 
 exports.removeCharacter = async (req, res) => {
