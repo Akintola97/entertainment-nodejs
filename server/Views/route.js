@@ -8,7 +8,7 @@ const { register, login, authenticate, userInfo, logout, saveCharacter, getSaved
 routes.post('/register', register )
 routes.post('/login', login  )
 routes.get('/userinfo', authenticate, userInfo)
-routes.get('/logout', logout)
+routes.get('/logout', authenticate, logout)
 routes.post('/saveCharacter', authenticate,  saveCharacter);
 routes.get('/savedCharacters', authenticate,  getSavedCharacters);
 routes.delete('/removecharacter/:characterId', authenticate, removeCharacter)
