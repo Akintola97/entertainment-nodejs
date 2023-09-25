@@ -260,20 +260,50 @@ const Characters = ({ charactersData }) => {
     setCharacterName("");
   };
 
+  // const saveCharacter = async () => {
+  //   try {
+  //     // Check if the character with the same characterId already exists in the user's saved content
+  //     const existingCharacter = await axios.get(
+  //       `${backendUrl}/auth/savedCharacters/${selectedImage.id}`,
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
+  
+  //     if (existingCharacter.data && existingCharacter.data.length > 0) {
+  //       window.alert("Character already saved");
+  //     } else {
+  //       // Character doesn't exist in saved content, proceed to save it
+  //       const response = await axios.post(
+  //         `${backendUrl}/auth/saveCharacter`,
+  //         {
+  //           characterId: selectedImage.id,
+  //           characterName: selectedImage.name,
+  //           imageUrl: selectedImage.src,
+  //           description: selectedImage.description,
+  //         },
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+  
+  //       if (response.status === 200) {
+  //         window.alert(response.data.message);
+  //         setIsSaved(true);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Error saving character:", error);
+  //     if (error.response && error.response.status === 400) {
+  //       window.alert(error.response.data.message);
+  //     }
+  //   }
+  // };
+  
   const saveCharacter = async () => {
     try {
-      // Check if the character with the same characterId already exists in the user's saved content
-      const existingCharacter = await axios.get(
-        `${backendUrl}/auth/savedCharacters/${selectedImage.id}`,
-        {
-          withCredentials: true,
-        }
-      );
-  
-      if (existingCharacter.data && existingCharacter.data.length > 0) {
-        window.alert("Character already saved");
-      } else {
-        // Character doesn't exist in saved content, proceed to save it
+      if (!selectedImage.id) {
+        // If the character ID is not present, save the item directly
         const response = await axios.post(
           `${backendUrl}/auth/saveCharacter`,
           {
@@ -291,6 +321,37 @@ const Characters = ({ charactersData }) => {
           window.alert(response.data.message);
           setIsSaved(true);
         }
+      } else {
+        // Check if the character with the same characterId already exists in the user's saved content
+        const existingCharacter = await axios.get(
+          `${backendUrl}/auth/savedCharacters/${selectedImage.id}`,
+          {
+            withCredentials: true,
+          }
+        );
+  
+        if (existingCharacter.data && existingCharacter.data.length > 0) {
+          window.alert("Character already saved");
+        } else {
+          // Character doesn't exist in saved content, proceed to save it
+          const response = await axios.post(
+            `${backendUrl}/auth/saveCharacter`,
+            {
+              characterId: selectedImage.id,
+              characterName: selectedImage.name,
+              imageUrl: selectedImage.src,
+              description: selectedImage.description,
+            },
+            {
+              withCredentials: true,
+            }
+          );
+  
+          if (response.status === 200) {
+            window.alert(response.data.message);
+            setIsSaved(true);
+          }
+        }
       }
     } catch (error) {
       console.error("Error saving character:", error);
@@ -300,6 +361,9 @@ const Characters = ({ charactersData }) => {
     }
   };
   
+
+
+
 
   const charactersToRender =
     searchedCharacterData.length > 0
