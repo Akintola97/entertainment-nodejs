@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router();
-const { register, login, authenticate, userInfo, logout, saveCharacter, getSavedCharacters, removeCharacter } = require('../Controller/authController');
+const { register, login, authenticate, userInfo, logout, saveCharacter, getSavedCharacters, removeCharacter, getSavedCharacterById } = require('../Controller/authController');
 
 
 
