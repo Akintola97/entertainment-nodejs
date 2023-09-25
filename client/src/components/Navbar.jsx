@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <div className="fixed top-0 left-0 right-0 bg-black w-full h-[8vh] flex text-white items-center z-10">
       <div className="w-full">
-        <Link to = '/marvel/heropage'>
+        <Link to = {user ? '/marvel/heropage' : '/marvel'}>
         <h2 className="p-5 text-[3vmin]">Marvel Heroes</h2>
         </Link>
       </div>
