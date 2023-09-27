@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://boltluna.io/marvel",
+  "homepage": "https://marvel.boltluna.io",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -47,4 +47,3 @@
   },
   "proxy": "https://marvel-search-app.onrender.com"
 }
-
