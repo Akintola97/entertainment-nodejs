@@ -27,7 +27,7 @@ const Login = () => {
         navigate("/marvel/heropage");
       } else {
         console.log("Login failed");
-        if(response.data.errorMessage){
+        if(response.data.errorMessage === "Invalid Credentials"){
           window.alert(response.data.errorMessage)
         }else{
           window.alert("Login failed. Please Check your Credentials.")
