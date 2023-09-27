@@ -12,7 +12,7 @@ const routes = require('./Views/route');
 const marvel_route = require('./Views/marvelroute');
 
 
-app.use(cors({ credentials: true, origin: "https://boltluna.io"}));
+app.use(cors({ credentials: true, origin: "https://marvel.boltluna.io"}));
 app.use(express.json());
 app.use(cookieParser());
 
