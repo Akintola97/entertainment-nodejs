@@ -28,7 +28,7 @@ const Login = () => {
       } else {
         console.log("Login failed");
         if(response.data.errorMessage){
-          window.alert(response.data.message)
+          window.alert(response.data.errorMessage)
         }else{
           window.alert("Login failed. Please Check your Credentials.")
         }
