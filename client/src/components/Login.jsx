@@ -27,10 +27,15 @@ const Login = () => {
         navigate("/marvel/heropage");
       } else {
         console.log("Login failed");
-        window.alert(response.data.message)
+        if(response.data.errorMessage){
+          window.alert(response.data.message)
+        }else{
+          window.alert("Login failed. Please Check your Credentials.")
+        }
       }
     } catch (error) {
       console.log(error);
+      window.alert('An error occurred during Login. Please try again')
     }
   };
 

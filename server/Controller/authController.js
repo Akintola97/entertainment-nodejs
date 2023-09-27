@@ -44,13 +44,13 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(401).json({ message: "Invalid Credentials" });
+      return res.status(401).json({ errorMessage: "Invalid Credentials" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid Credentials" });
+      return res.status(401).json({ errorMessage: "Invalid Credentials" });
     }
 
     const token = jwt.sign({ userId: user._id }, secret, { expiresIn: "1hr" });
@@ -60,7 +60,7 @@ exports.login = async (req, res) => {
       httpOnly: true,
       maxAge: 3600000, 
       secure: true,
-      sameSite: 'none'
+      sameSite: 'Lax',
     });
 
     res.status(200).json({ message: "Login Successful" });
@@ -86,6 +86,11 @@ exports.authenticate = async (req, res, next) => {
 
     if (!user) {
       return res.status(400).json({ message: "User not found" });
+    }
+
+    const tokenExpiration = new Date(decodedToken.exp * 1000); 
+    if (tokenExpiration <= new Date()) {
+      return res.status(401).json({ message: "Authentication failed - Token expired" });
     }
 
 
@@ -120,7 +125,13 @@ exports.userInfo = async (req, res) => {
 
 exports.logout = async(req, res) =>{
   try{
-    res.clearCookie('authToken', {path:'/'});
+    res.clearCookie('authToken', {
+      path:'/',
+      httpOnly: true,
+      maxAge: 0,
+      secure: true, 
+      sameSite: 'Lax',
+  });
     res.status(200).json({message: "Logout Successful"});
   }
   catch(error){

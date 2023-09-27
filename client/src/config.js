@@ -1,3 +1,3 @@
-const backendUrl = "https://marvel-search-app.onrender.com";
+const backendUrl = "https://marvel.boltluna.io";
 
 export default backendUrl
