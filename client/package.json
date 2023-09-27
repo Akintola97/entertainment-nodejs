@@ -44,6 +44,5 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.3.3"
-  },
-  "proxy": "https://marvel-search-app.onrender.com"
+  }
 }
