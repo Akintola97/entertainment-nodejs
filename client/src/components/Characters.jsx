@@ -48,7 +48,7 @@ const Characters = ({ charactersData }) => {
         setSearchedCharacterData(searchData.data.results);
       } else {
         setSearchedCharacterData([]);
-        window.alert(`No results found for "${characterName}"`);
+        window.alert(`No results found for "${characterName}"... if the character has a second name i.e, peter-parker, spider-man, try using a hypen "-"`);
       }
     } catch (error) {
       console.error("Error fetching search data:", error);
@@ -114,7 +114,7 @@ const Characters = ({ charactersData }) => {
               value={characterName}
               onChange={(e) => setCharacterName(e.target.value)}
             />
-            <button className="text-white bg-green-500 rounded-md p-2 ml-2">
+            <button className="text-white bg-green-500 rounded-md p-1.5 ml-2">
               <AiOutlineSearch className="text-[2.0vmin]" />
             </button>
           </div>
