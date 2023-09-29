@@ -1,3 +1,161 @@
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import backendUrl from "../config";
+
+
+// const Hero = () => {
+//   const [data, setData] = useState([]);
+//   const [currentItemIndex, setCurrentItemIndex] = useState(0);
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [attributionText, setAttributionText] = useState("");
+
+//   const setLoading = (loading) => {
+//     setIsLoading(loading);
+//   };
+
+//   useEffect(() => {
+//     fetchData();
+//   }, []);
+
+//   useEffect(() => {
+//     const timer = setInterval(() => {
+//       const nextIndex = (currentItemIndex + 1) % data.length;
+//       setCurrentItemIndex(nextIndex);
+//     }, 5000);
+
+//     return () => clearInterval(timer);
+//   }, [currentItemIndex, data]);
+
+//   const fetchData = async () => {
+//     try {
+//       setLoading(true);
+//       const response = await axios.get(`${backendUrl}/marvel/db`);
+//       console.log(response.data, "abc");
+//       setData(response.data[0]?.data?.results || []);
+//       setAttributionText(response.data[0].attributionText)
+
+//     } catch (error) {
+//       console.log("Error fetching data:", error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+
+
+//   const goToPrevious = () => {
+//     const previousIndex = (currentItemIndex - 1 + data.length) % data.length;
+//     setCurrentItemIndex(previousIndex);
+//   };
+
+//   const goToNext = () => {
+//     const nextIndex = (currentItemIndex + 1) % data.length;
+//     setCurrentItemIndex(nextIndex);
+//   };
+
+//   return (
+//     <div className="w-full h-full relative">
+//       {isLoading ? (
+//         <div>Loading...</div>
+//       ) : data.length > 0 ? (
+//         <>
+//           <div className="w-full h-[100vh] md:h-[125vh] relative">
+//             <a
+//               href={data[currentItemIndex]?.urls[0]?.url}
+//               target="_blank"
+//               rel="noopener noreferrer"
+//             >
+//               <img
+//                 className="w-full h-full object-cover object-top absolute top-0 left-0"
+//                 src={`${data[currentItemIndex]?.images[0]?.path}.${data[currentItemIndex]?.images[0]?.extension}`}
+//                 alt={data[currentItemIndex]?.title}
+//               />
+//             </a>
+//           </div>
+
+//           <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
+//             <button
+//               tabIndex={0}
+//               onClick={goToPrevious}
+//               className="bg-black bg-opacity-40 text-white rounded-full p-2 hover:bg-opacity-60 focus:outline-none transition duration-300"
+//             >
+//               <svg
+//                 xmlns="http://www.w3.org/2000/svg"
+//                 className="h-6 w-6"
+//                 fill="none"
+//                 viewBox="0 0 24 24"
+//                 stroke="currentColor"
+//               >
+//                 <path
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                   strokeWidth="2"
+//                   d="M15 19l-7-7 7-7"
+//                 />
+//               </svg>
+//             </button>
+//           </div>
+//           <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
+//             <button
+//               tabIndex={0}
+//               onClick={goToNext}
+//               className="bg-black bg-opacity-40 text-white rounded-full p-2 hover:bg-opacity-60 focus:outline-none transition duration-300"
+//             >
+//               <svg
+//                 xmlns="http://www.w3.org/2000/svg"
+//                 className="h-6 w-6"
+//                 fill="none"
+//                 viewBox="0 0 24 24"
+//                 stroke="currentColor"
+//               >
+//                 <path
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                   strokeWidth="2"
+//                   d="M9 5l7 7-7 7"
+//                 />
+//               </svg>
+//             </button>
+//           </div>
+//           <div className="absolute md:w-[40%] bottom-[5%] left-0 p-5 w-full bg-gradient-to-b from-black">
+//             <h1 className="text-white font-bold text-[3vmin] p-3">
+//               {data[currentItemIndex].title}
+//             </h1>
+//             <p className="text-white font-bold text-[2.0vmin] p-3">
+//               Creators:{" "}
+//               {data[currentItemIndex].creators.items.map((creator, index) => (
+//                 <span key={index}>
+//                   {creator.name} ({creator.role})
+//                   {index < data[currentItemIndex].creators.items.length - 1
+//                     ? ", "
+//                     : ""}
+//                 </span>
+//               ))}
+//             </p>
+
+//             <p className="text-yellow-300 font-bold text-[2.3vmin] p-2">
+//               Price: ${data[currentItemIndex].prices[0]?.price || "N/A"}
+//             </p>
+//             <p className="text-yellow-300 font-bold text-[2.3vmin] p-2">
+//               Issue #: {data[currentItemIndex].issueNumber || "N/A"}
+//             </p>
+//             <p className="text-yellow-300 font-bold text-[2.3vmin] p-2">
+//               Page Count: {data[currentItemIndex].pageCount || "N/A"}
+//             </p>
+//             <p className="text-white font-bold text-[2.3vmin] p-2">
+//               Attribution: {attributionText || "N/A"}
+//             </p>
+//           </div>
+//         </>
+//       ) : (
+//         <div>No data available.</div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Hero;
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import backendUrl from "../config";
@@ -6,10 +164,12 @@ import backendUrl from "../config";
 const Hero = () => {
   const [data, setData] = useState([]);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isGradientExpanded, setIsGradientExpanded] = useState(false);
-  const transitionDelay = 20000;
+  const [attributionText, setAttributionText] = useState("");
+
+  const setLoading = (loading) => {
+    setIsLoading(loading);
+  };
 
   useEffect(() => {
     fetchData();
@@ -19,34 +179,27 @@ const Hero = () => {
     const timer = setInterval(() => {
       const nextIndex = (currentItemIndex + 1) % data.length;
       setCurrentItemIndex(nextIndex);
-    }, transitionDelay);
+    }, 5000);
 
     return () => clearInterval(timer);
   }, [currentItemIndex, data]);
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(`${backendUrl}/marvel/db`);
-      setData(response.data);
-      setIsLoading(false);
+      console.log(response.data, "abc");
+      setData(response.data[0]?.data?.results || []);
+      setAttributionText(response.data[0].attributionText)
+
     } catch (error) {
       console.log("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const currentItem = data[currentItemIndex]?.results[0];
 
-  const toggleDescription = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  const toggleGradientExpansion = () => {
-    setIsGradientExpanded(!isGradientExpanded);
-  };
-
-  const gradientClass = isGradientExpanded
-    ? "bg-gradient-to-b from-black"
-    : "bg-gradient-to-t from-black";
 
   const goToPrevious = () => {
     const previousIndex = (currentItemIndex - 1 + data.length) % data.length;
@@ -58,111 +211,103 @@ const Hero = () => {
     setCurrentItemIndex(nextIndex);
   };
 
-  function renderDescription(description, maxLength) {
-    if (!description) {
-      return "";
-    }
-    if (isExpanded) {
-      return description;
-    }
-    return description.slice(0, maxLength) + "...";
-  }
-
   return (
-    <div
-      className={`w-full md:h-screen h-[50vh] relative transition-opacity duration-500 ${
-        isLoading ? "opacity-0" : "opacity-100"
-      }`}
-    >
-      <div
-        className={`md:w-full w-full md:h-full h-[50vh] overflow-hidden relative ${gradientClass}`}
-      >
-        {currentItem && (
-          <img
-            className="w-full h-full object-cover"
-            src={`${currentItem.thumbnail?.path}.${currentItem.thumbnail?.extension}`}
-            alt={currentItem.title}
-            onLoad={() => setIsLoading(false)}
-          />
-        )}
-        <button
-          onClick={goToPrevious}
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-40 text-white rounded-full p-2 hover:bg-opacity-60 focus:outline-none transition duration-300"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
-          </svg>
-        </button>
-        <button
-          onClick={goToNext}
-          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-40 text-white rounded-full p-2 hover:bg-opacity-60 focus:outline-none transition duration-300"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-            />
-          </svg>
-        </button>
-      </div>
-      <div
-        className={`absolute md:w-[40%] w-full bottom-0 left-0 p-5 text-white ${gradientClass}`}
-      >
-        <h1 className="text-white font-bold text-[2.5rem] mb-2">
-          {currentItem?.title}
-        </h1>
-        <p
-          className={`text-white ${
-            isExpanded ? "text-md" : "truncate-2-lines"
-          }`}
-        >
-          {renderDescription(
-            currentItem?.description,
-            isExpanded ? Infinity : 150
-          )}
-        </p>
-        {!isExpanded && (
-          <button
-            onClick={() => {
-              toggleDescription();
-              toggleGradientExpansion();
-            }}
-            className="text-blue-500 hover:underline focus:outline-none mt-2"
-          >
-            Read More
-          </button>
-        )}
-        {isExpanded && (
-          <button
-            onClick={() => {
-              toggleDescription();
-              toggleGradientExpansion();
-            }}
-            className="text-blue-500 hover:underline focus:outline-none mt-2"
-          >
-            Show Less
-          </button>
-        )}
-      </div>
+    <div className="w-full h-full relative">
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : data.length > 0 ? (
+        <>
+          <div className="w-full h-[100vh] md:h-[125vh] relative">
+            <a
+              href={data[currentItemIndex]?.urls[0]?.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                className="w-full h-full object-cover object-top absolute top-0 left-0"
+                src={`${data[currentItemIndex]?.images[0]?.path}.${data[currentItemIndex]?.images[0]?.extension}`}
+                alt={data[currentItemIndex]?.title}
+              />
+            </a>
+          </div>
+
+          <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
+            <button
+              tabIndex={0}
+              onClick={goToPrevious}
+              className="bg-black bg-opacity-40 text-white rounded-full p-2 hover:bg-opacity-60 focus:outline-none transition duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
+            <button
+              tabIndex={0}
+              onClick={goToNext}
+              className="bg-black bg-opacity-40 text-white rounded-full p-2 hover:bg-opacity-60 focus:outline-none transition duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="absolute md:w-[40%] bottom-[5%] left-0 p-5 w-full bg-gradient-to-b from-black">
+            <h1 className="text-white font-bold text-[3vmin] p-3">
+              {data[currentItemIndex].title}
+            </h1>
+            <p className="text-white font-bold text-[2.0vmin] p-3">
+              Creators:{" "}
+              {data[currentItemIndex].creators.items.map((creator, index) => (
+                <span key={index}>
+                  {creator.name} ({creator.role})
+                  {index < data[currentItemIndex].creators.items.length - 1
+                    ? ", "
+                    : ""}
+                </span>
+              ))}
+            </p>
+
+            <p className="text-yellow-300 font-bold text-[2.3vmin] p-2">
+              Price: ${data[currentItemIndex].prices[0]?.price || "N/A"}
+            </p>
+            <p className="text-yellow-300 font-bold text-[2.3vmin] p-2">
+              Issue #: {data[currentItemIndex].issueNumber || "N/A"}
+            </p>
+            <p className="text-yellow-300 font-bold text-[2.3vmin] p-2">
+              Page Count: {data[currentItemIndex].pageCount || "N/A"}
+            </p>
+            <p className="text-white font-bold text-[2.3vmin] p-2">
+              Attribution: {attributionText || "N/A"}
+            </p>
+          </div>
+        </>
+      ) : (
+        <div>No data available.</div>
+      )}
     </div>
   );
 };

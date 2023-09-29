@@ -110,29 +110,25 @@
 //     }
 //   };
 
-//   const handleHeartTouch = () => {
-//     if (!isSaved) {
-//       saveCharacter();
-//     }
-//   };
-
 //   return (
 //     <div className="w-full h-full">
-//       <div className="w-full h-full flex justify-end">
-//         <form className="p-3 " onSubmit={handleSubmit}>
-//           <input
-//             className="bg-transparent focus:outline-none border-b text-black cursor-pointer"
-//             type="text"
-//             placeholder="Search..."
-//             value={characterName}
-//             onChange={(e) => setCharacterName(e.target.value)}
-//           />
-//           <button className="text-white bg-green-500 rounded-md p-1.5">
-//             {" "}
-//             <AiOutlineSearch className="text-[2.0vmin]" />
-//           </button>
-//         </form>
-//       </div>
+//   <div className="w-full h-full flex flex-col md:flex-row justify-end items-center">
+//   <form className="p-3">
+//     <div className="flex">
+//       <input
+//         className="bg-transparent focus:outline-none border-b text-black cursor-pointer"
+//         type="text"
+//         placeholder="Search..."
+//         value={characterName}
+//         onChange={(e) => setCharacterName(e.target.value)}
+//       />
+//       <button className="text-white bg-green-500 rounded-md p-1.5 ml-2">
+//         <AiOutlineSearch className="text-[2.0vmin]" />
+//       </button>
+//     </div>
+//   </form>
+// </div>
+
 //       <div className="w-full h-full grid grid-cols-2 md:grid-cols-3 gap-4 md:p-5 p-1">
 //         {charactersToRender.map((character, index) => (
 //           <div key={index}>
@@ -186,8 +182,7 @@
 //               size={24}
 //               color={isSaved ? "red" : "black"}
 //               onClick={handleHeartClick}
-//               onTouchStart={handleHeartTouch} // Handle touch events
-//               style={{ cursor: "pointer" }} // Add a pointer cursor
+//               style={{ cursor: "pointer" }} 
 //             />
 //           </Box>
 //         </Box>
@@ -198,7 +193,6 @@
 
 // export default Characters;
 
-
 import axios from "axios";
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -206,18 +200,17 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { FaHeart } from "react-icons/fa";
-import backendUrl from "../config"
-
+import backendUrl from "../config";
 
 axios.defaults.withCredentials = true;
 
 const Characters = ({ charactersData }) => {
   const [characterName, setCharacterName] = useState("");
   const [searchedCharacterData, setSearchedCharacterData] = useState([]);
-
   const [openModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
+  const [searchError, setSearchError] = useState("");
 
   const openImageModal = (image) => {
     setSelectedImage(image);
@@ -247,24 +240,26 @@ const Characters = ({ charactersData }) => {
         searchData.data.results.length > 0
       ) {
         setSearchedCharacterData(searchData.data.results);
+        setSearchError(""); // Clear any previous error message
       } else {
         setSearchedCharacterData([]);
-        window.alert(`No results found for "${characterName}"`);
+        setSearchError(`No results found for "${characterName}". Please try again.`);
       }
     } catch (error) {
       console.error("Error fetching search data:", error);
       setSearchedCharacterData([]);
-      window.alert("Error occurred while fetching data.");
+      setSearchError(
+        "An error occurred...Please try again. If searching for a character with two names 'spider-man/peter-parker', use a hypen"
+      );
     }
 
     setCharacterName("");
   };
 
-  
   const saveCharacter = async () => {
     try {
       const response = await axios.post(
-        `${backendUrl}/auth/saveCharacter`,
+      `${backendUrl}/auth/saveCharacter`,
         {
           characterId: selectedImage.id,
           characterName: selectedImage.name,
@@ -275,7 +270,7 @@ const Characters = ({ charactersData }) => {
           withCredentials: true,
         }
       );
-  
+
       if (response.status === 200) {
         window.alert(response.data.message);
         setIsSaved(true);
@@ -284,10 +279,10 @@ const Characters = ({ charactersData }) => {
       console.error("Error saving character:", error);
       if (error.response && error.response.status === 400) {
         window.alert(error.response.data.message);
+    
       }
     }
   };
-  
 
   const charactersToRender =
     searchedCharacterData.length > 0
@@ -312,24 +307,29 @@ const Characters = ({ charactersData }) => {
     }
   };
 
-
   return (
     <div className="w-full h-full">
-      <div className="w-full h-full flex justify-end">
-        <form className="p-3 " onSubmit={handleSubmit}>
-          <input
-            className="bg-transparent focus:outline-none border-b text-black cursor-pointer"
-            type="text"
-            placeholder="Search..."
-            value={characterName}
-            onChange={(e) => setCharacterName(e.target.value)}
-          />
-          <button className="text-white bg-green-500 rounded-md p-1.5">
-            {" "}
-            <AiOutlineSearch className="text-[2.0vmin]" />
-          </button>
+      <div className="w-full h-full flex flex-col md:flex-row justify-end items-center">
+        <form className="p-3">
+          <div className="flex">
+            <input
+              className="bg-transparent focus:outline-none border-b text-black cursor-pointer"
+              type="text"
+              placeholder="Search..."
+              value={characterName}
+              onChange={(e) => setCharacterName(e.target.value)}
+            />
+            <button className="text-white bg-green-500 rounded-md p-1.5 ml-2">
+              <AiOutlineSearch className="text-[2.0vmin]" />
+            </button>
+          </div>
         </form>
       </div>
+
+      {searchError && (
+        <p className="text-red-500">{searchError}</p>
+      )}
+
       <div className="w-full h-full grid grid-cols-2 md:grid-cols-3 gap-4 md:p-5 p-1">
         {charactersToRender.map((character, index) => (
           <div key={index}>
@@ -383,8 +383,7 @@ const Characters = ({ charactersData }) => {
               size={24}
               color={isSaved ? "red" : "black"}
               onClick={handleHeartClick}
-              onTouchStart={handleHeartClick} // Handle touch events
-              style={{ cursor: "pointer" }} // Add a pointer cursor
+              style={{ cursor: "pointer" }} 
             />
           </Box>
         </Box>

@@ -6,40 +6,53 @@ const Navbar = () => {
   const { user, logout } = useAuth();
 
   return (
-    <div className="fixed top-0 left-0 right-0 bg-black w-full h-[8vh] flex text-white items-center z-10">
-      <div className="w-full">
-        <Link to = {user ? '/marvel/heropage' : '/marvel'}>
-        <h2 className="p-5 text-[3vmin]">Marvel Heroes</h2>
-        </Link>
-      </div>
-      <div className="w-full flex flex-wrap items-center justify-end p-2">
-        {user ? (
-          <div className="flex items-center">
-            <p className="text-[2.2vmin] p-2 md:p-5">Hi, {user}</p>
-            <Link to="/marvel/heropage">
-              <p className="text-[2.2vmin]">Home</p>
-            </Link>
-            <Link to="/marvel/saved">
-              <p className="text-[2.2vmin] p-2 md:p-5">Saved</p>
-            </Link>
-            <button
-              onClick={logout}
-              className="bg-red-500 hover:bg-red-600 text-white py-2 px-3 sm:px-4 rounded transition duration-300 ease-in-out text-[2.4vmin]"
-            >
-              Logout
-            </button>
-
-          </div>
-        ) : (
-          <Link to="/marvel">
-            <button className="bg-green-500 hover:bg-green-600 text-white py-2 px-3 sm:px-4 rounded transition duration-300 ease-in-out text-[2.0vmin]">
-              Login
-            </button>
+    <nav className="fixed top-0 left-0 right-0 bg-black w-full h-[8vh] flex text-white items-center z-10">
+      <ul className="w-full flex items-center justify-between p-2">
+        <li className="flex items-center space-x-4">
+          <Link to={user ? "/marvel/heropage" : "/marvel"} className="nav-link">
+            <h2 className="p-5 text-[3vmin] hover:text-yellow-300 font-bold">Marvel Heroes</h2>
           </Link>
-        
-        )}
-      </div>
-    </div>
+        </li>
+        <li className="flex items-center space-x-4">
+          {user && (
+            <>
+              <span className="nav-link text-[1.8vmin] sm:text-[2.2vmin]">
+                Hi, {user}
+              </span>
+
+              <Link
+                to="/marvel/heropage"
+                className="nav-link text-[1.8vmin] sm:text-[2.2vmin] hover:text-yellow-300"
+              >
+                Home
+              </Link>
+
+              <Link
+                to="/marvel/saved"
+                className="nav-link text-[1.8vmin] sm:text-[2.2vmin] hover:text-yellow-300"
+              >
+                Saved
+              </Link>
+
+              <button
+                onClick={logout}
+                className="bg-red-500 hover:bg-red-600 text-white py-2 px-3 sm:px-4 rounded transition duration-300 ease-in-out text-[2.4vmin]"
+              >
+                Logout
+              </button>
+            </>
+          )}
+
+          {!user && (
+            <Link to="/marvel">
+              <button className="bg-green-500 hover:bg-green-600 text-white py-2 px-3 sm:px-4 rounded transition duration-300 ease-in-out text-[2.0vmin]">
+                Login
+              </button>
+            </Link>
+          )}
+        </li>
+      </ul>
+    </nav>
   );
 };
 
