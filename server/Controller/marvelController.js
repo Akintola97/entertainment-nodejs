@@ -1,9 +1,10 @@
 const crypto = require("crypto");
 const axios = require("axios");
 
+const Hero_page = require('../Model/heroPage')
 const Characters = require("../Model/marvelCharacters");
 const Comic = require("../Model/marvelComics");
-const Character = require("../Model/marvelCharacter");
+
 
 const ts = new Date().getTime();
 const privateKey = process.env.PRIVATE_KEY;
@@ -14,18 +15,18 @@ const hash = crypto
   .update(ts + privateKey + publicKey)
   .digest("hex");
 
-const superheroNames = ["wolverine", "hulk", "thor"];
+const superheroNames = ["spider-man"];
 
-exports.marvelhero = async (req, res) => {
+exports.hero_page = async (req, res) => {
   try {
     const allCharacterData = [];
 
     for (const name of superheroNames) {
-      const marvel_hero = await axios.get(
-        `https://gateway.marvel.com:443/v1/public/characters?name=${name}&ts=${ts}&apikey=${publicKey}&hash=${hash}`
+      const hero_content = await axios.get(
+        `https://gateway.marvel.com:443/v1/public/comics?title=${name}&ts=${ts}&apikey=${publicKey}&hash=${hash}`
       );
 
-      const data = marvel_hero.data;
+      const data = hero_content.data;
       if (data.data.total !== 0) {
         allCharacterData.push(data);
       }
@@ -33,17 +34,23 @@ exports.marvelhero = async (req, res) => {
 
     for (const data of allCharacterData) {
       const results = data.data.results;
-      const characterData = new Characters({
+      const heroData = new Hero_page({
         code: data.code,
         status: data.status,
         copyright: data.copyright,
         attributionText: data.attributionText,
         attributionHTML: data.attributionHTML,
         etag: data.etag,
-        results: results,
+        data: {
+          offset: data.data.offset,
+          limit: data.data.limit,
+          total: data.data.total,
+          count: data.data.count,
+          results: results,
+        },
       });
 
-      await characterData.save();
+      await heroData.save();
     }
 
     res.send(allCharacterData);
@@ -55,7 +62,7 @@ exports.marvelhero = async (req, res) => {
 
 exports.db = async (req, res) => {
   try {
-    const db = await Characters.find();
+    const db = await Hero_page.find();
     res.send(db);
     return res.status(200);
   } catch (error) {
@@ -149,7 +156,7 @@ exports.character = async (req, res) => {
 
     for (const data of CharacterData) {
       const results = data.data.results;
-      const characterData = new Character({
+      const characterData = new Characters({
         code: data.code,
         status: data.status,
         copyright: data.copyright,
@@ -171,7 +178,7 @@ exports.character = async (req, res) => {
 
 exports.character_db = async (req, res) => {
   try {
-    const db = await Character.find();
+    const db = await Characters.find();
     res.send(db);
     return res.status(200);
   } catch (error) {
