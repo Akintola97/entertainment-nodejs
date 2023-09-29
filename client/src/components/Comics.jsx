@@ -48,6 +48,7 @@ const Comics = ({ comicData }) => {
     <div className="w-full h-full">
       <div className="w-full h-full flex justify-end">
         <form className="p-3" onSubmit={handleSubmit}>
+        <div className="flex items-center">
           <input
             className="bg-transparent focus:outline-none border-b text-black cursor-pointer"
             type="text"
@@ -55,10 +56,10 @@ const Comics = ({ comicData }) => {
             value={comicName}
             onChange={(e) => setComicName(e.target.value)}
           />
-          <button className="text-white bg-green-500 rounded-md p-1.5">
-            {" "}
+          <button className="text-white bg-green-500 rounded-md p-1.5 ml-2">
             <AiOutlineSearch className="text-[2.0vmin]" />
           </button>
+          </div>
         </form>
       </div>
       <div className="w-full h-full grid grid-cols-2 md:grid-cols-3 gap-4 md:p-5 p-1">

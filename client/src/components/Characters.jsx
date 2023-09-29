@@ -91,7 +91,8 @@ const Characters = ({ charactersData }) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: "85%", // Adjust the width as needed for small screens
+    maxWidth: "400px", // Set a max width to prevent it from taking the whole screen
     bgcolor: "white",
     border: "2px solid #000",
     boxShadow: 24,
@@ -104,7 +105,7 @@ const Characters = ({ charactersData }) => {
         <form className="p-3" onSubmit={handleSubmit}>
           <div className="flex items-center">
             <input
-              className="bg-transparent focus:outline-none border-b text-black"
+              className="bg-transparent focus:outline-none border-b text-black cursor-pointer"
               type="text"
               placeholder="Search..."
               value={characterName}
@@ -145,6 +146,8 @@ const Characters = ({ charactersData }) => {
         onClose={closeImageModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        // Added backdrop click handler to close the modal
+        BackdropProps={{ onClick: closeImageModal }}
       >
         <Box sx={modalStyle}>
           <Typography id="modal-modal-title" variant="h6">
@@ -182,3 +185,4 @@ const Characters = ({ charactersData }) => {
 };
 
 export default Characters;
+
