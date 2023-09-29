@@ -23,7 +23,6 @@ const Login = () => {
   
       if (response.status === 200) {
         setUser(username);
-        window.alert(response.data.message)
         navigate("/marvel/heropage");
       } else {
         console.log("Login failed");
