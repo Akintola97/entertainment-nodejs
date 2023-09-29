@@ -15,8 +15,6 @@ const Characters = ({ charactersData }) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
 
   const openImageModal = (image) => {
     setSelectedImage(image);
@@ -72,15 +70,13 @@ const Characters = ({ charactersData }) => {
       );
 
       if (response.status === 200) {
-        setSuccessMessage(response.data.message);
-        window.alert(successMessage);
+        window.alert(response.data.message);
         setIsSaved(true);
       }
     } catch (error) {
       console.error("Error saving character:", error);
       if (error.response && error.response.status === 400) {
-        setErrorMessage(error.response.data.message);
-        window.alert(errorMessage);
+        window.alert(error.response.data.message);
       }
     }
   };
